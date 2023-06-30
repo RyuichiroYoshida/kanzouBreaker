@@ -9,6 +9,7 @@ public class BossController : MonoBehaviour
     [SerializeField] public int _bossLife = 100;
     [SerializeField] BossEffect _effect;
     [SerializeField] Transform _playerTransform;
+    [SerializeField] float _enemySpawnCoolTime = 3;
 
     int _bulletsCounts = 0;
     int _enemyCounts = 0;
@@ -58,7 +59,7 @@ public class BossController : MonoBehaviour
             _enemyCounts += 2;
             if (_enemyCounts <= 50)
             {
-                if (timer > 0.2)
+                if (timer > 1)
                 {
                     StartCoroutine(SpawnDelayTime());
                     /*
@@ -104,7 +105,7 @@ public class BossController : MonoBehaviour
         float enemyY = this.gameObject.transform.position.y + random1;
         Instantiate(_enemyPrefab, new Vector3(this.gameObject.transform.position.x, enemyY, this.gameObject.transform.position.z), Quaternion.identity);
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(_enemySpawnCoolTime);
 
         float random2 = Random.Range(0, -7);
         float enemyY2 = this.gameObject.transform.position.y - random2;
