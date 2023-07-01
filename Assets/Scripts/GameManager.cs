@@ -7,8 +7,25 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
     [SerializeField] GameObject _Player;
-    [SerializeField] GameObject _button;
+    [SerializeField] GameObject _returnButton;
+    [SerializeField] GameObject _titleButton;
     [SerializeField] GameObject _gameClear;
 
     [System.NonSerialized] public bool _isGameOver = false;
@@ -24,8 +41,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        _button.SetActive(false);
-        
+        _returnButton.SetActive(false);
+        _titleButton.SetActive(false);
 
     }
 
@@ -43,7 +60,7 @@ public class GameManager : MonoBehaviour
 
         if (_isGameClear)
         {
-            _button.SetActive(true);
+            _returnButton.SetActive(true);
             _gameClear.SetActive(true);
             print("gameclear");
         }
@@ -59,11 +76,17 @@ public class GameManager : MonoBehaviour
         _isGameClear = true;
     }
 
-    public void OnClick()
+    public void Return()
     {
-        print("aaa");
-        //SceneManager.LoadScene("TitleScene");
+        print("return");
         SceneManager.LoadScene("main");
+        Time.timeScale = 1.0f;
+    }
+
+    public void Title()
+    {
+        print("title");
+        SceneManager.LoadScene("TitleScene");
         Time.timeScale = 1.0f;
     }
 
@@ -71,7 +94,8 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         _gameOver.SetActive(true);
-        _button.SetActive(true);
+        _returnButton.SetActive(true);
+        _titleButton.SetActive(true);
         Time.timeScale = 0;
 
         

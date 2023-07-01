@@ -54,7 +54,7 @@ public class TitleChanger : MonoBehaviour
         _images[3].SetActive(false);
         _images[4].SetActive(false);
         yield return new WaitForSeconds(1);
-        SceneManager.LoadScene("main");
+        GameManager.instance.Return();
     }
 
     public void TitleStart()
